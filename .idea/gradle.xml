@@ -10,8 +10,13 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/asyncload" />
             <option value="$PROJECT_DIR$/bluetooth" />
             <option value="$PROJECT_DIR$/broadcastreceiver" />
+            <option value="$PROJECT_DIR$/googlemap" />
+            <option value="$PROJECT_DIR$/location" />
+            <option value="$PROJECT_DIR$/oauth" />
+            <option value="$PROJECT_DIR$/sensor" />
             <option value="$PROJECT_DIR$/socket" />
             <option value="$PROJECT_DIR$/wifi" />
           </set>
@@ -19,8 +24,13 @@
         <option name="myModules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/asyncload" />
             <option value="$PROJECT_DIR$/bluetooth" />
             <option value="$PROJECT_DIR$/broadcastreceiver" />
+            <option value="$PROJECT_DIR$/googlemap" />
+            <option value="$PROJECT_DIR$/location" />
+            <option value="$PROJECT_DIR$/oauth" />
+            <option value="$PROJECT_DIR$/sensor" />
             <option value="$PROJECT_DIR$/socket" />
             <option value="$PROJECT_DIR$/wifi" />
           </set>

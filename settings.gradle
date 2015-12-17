@@ -1,1 +1,1 @@
-include ':broadcastreceiver', ':wifi', ':socket', ':bluetooth'
+include ':broadcastreceiver', ':wifi', ':socket', ':bluetooth', ':location', ':oauth', ':googlemap', ':asyncload', ':sensor'
