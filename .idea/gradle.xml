@@ -5,23 +5,9 @@
       <GradleProjectSettings>
         <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="D:\Android Studio\gradle\gradle-2.8" />
+        <option name="gradleHome" value="$APPLICATION_HOME_DIR$/gradle/gradle-2.8" />
         <option name="gradleJvm" value="1.8" />
         <option name="modules">
-          <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/asyncload" />
-            <option value="$PROJECT_DIR$/bluetooth" />
-            <option value="$PROJECT_DIR$/broadcastreceiver" />
-            <option value="$PROJECT_DIR$/googlemap" />
-            <option value="$PROJECT_DIR$/location" />
-            <option value="$PROJECT_DIR$/oauth" />
-            <option value="$PROJECT_DIR$/sensor" />
-            <option value="$PROJECT_DIR$/socket" />
-            <option value="$PROJECT_DIR$/wifi" />
-          </set>
-        </option>
-        <option name="myModules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/asyncload" />
