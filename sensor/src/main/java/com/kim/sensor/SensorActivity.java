@@ -22,10 +22,14 @@ public class SensorActivity extends AppCompatActivity {
     TextView sensorList;
     @Bind(R.id.show_sensor_list)
     Button showSensorList;
-    @Bind(R.id.sensor_value)
-    TextView sensorValue;
+    @Bind(R.id.sensor_light)
+    TextView sensorLight;
+    @Bind(R.id.sensor_accelerometer)
+    TextView sensorAccelerometer;
 
     private SensorManager sensorManager;
+    private float[] gravity = new float[3];
+    private float[] linearAcceleration = new float[3];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +46,7 @@ public class SensorActivity extends AppCompatActivity {
                 List<Sensor> sensors = sensorManager.getSensorList(Sensor.TYPE_ALL);
                 String string = "";
                 for (Sensor sensor : sensors) {
-                    string += sensor.getName() + "----->version" + sensor.getVersion() + "\n";
+                    string += sensor.getName() + "--->version" + sensor.getVersion() + "--->power" + sensor.getPower() + "\n";
                 }
                 sensorList.setText(string);
             }
@@ -63,20 +67,48 @@ public class SensorActivity extends AppCompatActivity {
                 float timestamp = event.timestamp;
                 float acc = event.accuracy;
                 float lux = event.values[0];
-                String value = "sensorName="+sensorName+"\nsensorVendor="+sensorVendor
-                        +"\nresolution="+resolution+"\npower="+power+"\ntimestamp="+timestamp
-                        +"\nacc=" + acc + "\nlux=" + lux;
-                sensorValue.setText(value);
+                String value = "光线传感器:\nsensorName=" + sensorName + "\nsensorVendor=" + sensorVendor
+                        + "\nresolution=" + resolution + "\npower=" + power + "\ntimestamp=" + timestamp
+                        + "\nacc=" + acc + "\nlux=" + lux;
+                sensorLight.setText(value);
             }
 
             //传感器的精度发生变化时调用
             @Override
             public void onAccuracyChanged(Sensor sensor, int accuracy) {
             }
-        }, lightSensor, SensorManager.SENSOR_DELAY_GAME);
-        //SensorManager.SENSOR_DELAY_NORMAL = 200000ms
-        //SensorManager.SENSOR_DELAY_UI = 60000ms
-        //SensorManager.SENSOR_DELAY_GAME = 20000ms
-        //SensorManager.SENSOR_DELAY_FASTEST = 0ms
+        }, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        //SensorManager.SENSOR_DELAY_NORMAL = 200000微秒
+        //SensorManager.SENSOR_DELAY_UI = 60000微秒
+        //SensorManager.SENSOR_DELAY_GAME = 20000微秒
+        //SensorManager.SENSOR_DELAY_FASTEST = 0微秒
+
+        Sensor accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensorManager.registerListener(new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent event) {
+                float x = event.values[0];
+                float y = event.values[1];
+                float z = event.values[2];
+
+                float alpha = 0.8f;
+                gravity[0] = alpha * gravity[0] + (1 - alpha) * event.values[0];
+                gravity[1] = alpha * gravity[1] + (1 - alpha) * event.values[1];
+                gravity[2] = alpha * gravity[2] + (1 - alpha) * event.values[2];
+
+                linearAcceleration[0] = event.values[0] - gravity[0];
+                linearAcceleration[1] = event.values[1] - gravity[1];
+                linearAcceleration[2] = event.values[2] - gravity[2];
+
+                String value = "加速度传感器:\nx=" + x + "\ny=" + y + "\nz=" + z + "\n\nx=" + linearAcceleration[0] + "\ny=" + linearAcceleration[1] + "\nz=" + linearAcceleration[2];
+                sensorAccelerometer.setText(value);
+            }
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+            }
+        }, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+
     }
 }
