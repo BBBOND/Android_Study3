@@ -26,10 +26,19 @@ public class SensorActivity extends AppCompatActivity {
     TextView sensorLight;
     @Bind(R.id.sensor_accelerometer)
     TextView sensorAccelerometer;
+    @Bind(R.id.sensor_orientation)
+    TextView sensorOrientation;
+    @Bind(R.id.sensor_proximity)
+    TextView sensorProximity;
 
     private SensorManager sensorManager;
     private float[] gravity = new float[3];
     private float[] linearAcceleration = new float[3];
+
+    private SensorEventListener lightListener;
+    private SensorEventListener accelerometerListener;
+    private SensorEventListener orientationListener;
+    private SensorEventListener proximityListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +61,11 @@ public class SensorActivity extends AppCompatActivity {
             }
         });
 
-        //注册传感器及获取传感器精度和值
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        Sensor lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
-        sensorManager.registerListener(new SensorEventListener() {
+        init();
+    }
 
+    public void init() {
+        lightListener = new SensorEventListener() {
             //传感器的值发生变化时调用
             @Override
             public void onSensorChanged(SensorEvent event) {
@@ -77,14 +86,9 @@ public class SensorActivity extends AppCompatActivity {
             @Override
             public void onAccuracyChanged(Sensor sensor, int accuracy) {
             }
-        }, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
-        //SensorManager.SENSOR_DELAY_NORMAL = 200000微秒
-        //SensorManager.SENSOR_DELAY_UI = 60000微秒
-        //SensorManager.SENSOR_DELAY_GAME = 20000微秒
-        //SensorManager.SENSOR_DELAY_FASTEST = 0微秒
+        };
 
-        Sensor accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(new SensorEventListener() {
+        accelerometerListener = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent event) {
                 float x = event.values[0];
@@ -108,7 +112,76 @@ public class SensorActivity extends AppCompatActivity {
             public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
             }
-        }, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        };
 
+        orientationListener = new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent event) {
+                float azimuth_angle = event.values[0];
+                float pitch_angle = event.values[1];
+                float roll_angle = event.values[2];
+                String value = "方向传感器:\nazimuth_angle=" + azimuth_angle
+                        + "\npitch_angle=" + pitch_angle + "\nroll_angle=" + roll_angle;
+                sensorOrientation.setText(value);
+            }
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+            }
+        };
+
+        proximityListener = new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent event) {
+                float distance = event.values[0];
+                String value = "距离传感器:\ndistance=" + distance;
+                sensorProximity.setText(value);
+            }
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+            }
+        };
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //光线传感器
+        Sensor lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+        sensorManager.registerListener(lightListener, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        //SensorManager.SENSOR_DELAY_NORMAL = 200000微秒
+        //SensorManager.SENSOR_DELAY_UI = 60000微秒
+        //SensorManager.SENSOR_DELAY_GAME = 20000微秒
+        //SensorManager.SENSOR_DELAY_FASTEST = 0微秒
+
+        //加速度传感器
+        Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensorManager.registerListener(accelerometerListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
+
+        //方向传感器
+        Sensor orientationSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
+        sensorManager.registerListener(orientationListener, orientationSensor, SensorManager.SENSOR_DELAY_NORMAL);
+
+        //距离传感器
+        Sensor proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+        sensorManager.registerListener(proximityListener, proximitySensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //解除
+        if (accelerometerListener != null)
+            sensorManager.unregisterListener(accelerometerListener);
+        if (orientationListener != null)
+            sensorManager.unregisterListener(orientationListener);
+        if (lightListener != null)
+            sensorManager.unregisterListener(lightListener);
+        if (proximityListener != null)
+            sensorManager.unregisterListener(proximityListener);
     }
 }
