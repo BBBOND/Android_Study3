@@ -6,7 +6,10 @@
       <module fileurl="file://$PROJECT_DIR$/asyncload/asyncload.iml" filepath="$PROJECT_DIR$/asyncload/asyncload.iml" />
       <module fileurl="file://$PROJECT_DIR$/bluetooth/bluetooth.iml" filepath="$PROJECT_DIR$/bluetooth/bluetooth.iml" />
       <module fileurl="file://$PROJECT_DIR$/broadcastreceiver/broadcastreceiver.iml" filepath="$PROJECT_DIR$/broadcastreceiver/broadcastreceiver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/camera/camera.iml" filepath="$PROJECT_DIR$/camera/camera.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dragdrop/dragdrop.iml" filepath="$PROJECT_DIR$/dragdrop/dragdrop.iml" />
       <module fileurl="file://$PROJECT_DIR$/googlemap/googlemap.iml" filepath="$PROJECT_DIR$/googlemap/googlemap.iml" />
+      <module fileurl="file://$PROJECT_DIR$/html/html.iml" filepath="$PROJECT_DIR$/html/html.iml" />
       <module fileurl="file://$PROJECT_DIR$/location/location.iml" filepath="$PROJECT_DIR$/location/location.iml" />
       <module fileurl="file://$PROJECT_DIR$/oauth/oauth.iml" filepath="$PROJECT_DIR$/oauth/oauth.iml" />
       <module fileurl="file://$PROJECT_DIR$/sensor/sensor.iml" filepath="$PROJECT_DIR$/sensor/sensor.iml" />
